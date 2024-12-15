@@ -1,36 +1,22 @@
 import time
 import asyncio
-import curses
 from bleak import BleakScanner
 
-def display_hacker_ui(stdscr):
+def display_hacker_ui():
     """Display a hacker-style UI with options before showing the banner."""
-    curses.curs_set(0)  # Hide the cursor
-    stdscr.clear()  # Clear the screen
-    stdscr.refresh()
+    print("Initializing system...\n")
+    time.sleep(2)
     
     # Create a simple animation to simulate the 'hacker' feel
-    stdscr.addstr(0, 0, "Initializing system...\n", curses.A_BOLD)
-    stdscr.addstr(1, 0, "---------------------------------------\n")
-    stdscr.addstr(2, 0, ">>> Hacking Interface Booting Up...\n")
-    stdscr.addstr(3, 0, "---------------------------------------\n")
-    stdscr.addstr(5, 0, "Please wait...\n")
-    
-    stdscr.refresh()
-    time.sleep(2)
+    print(">>> Hacking Interface Booting Up...\n")
+    time.sleep(1)
 
     # Show the actions to the user
-    stdscr.clear()
-    stdscr.addstr(0, 0, "ACTION MENU:", curses.A_BOLD)
-    stdscr.addstr(1, 0, "1. Scan Bluetooth Devices")
-    stdscr.addstr(2, 0, "2. Perform Stress Test (Not Supported in Bleak)")
-    stdscr.addstr(3, 0, "3. Exit")
-    stdscr.addstr(5, 0, "Select an action (1/2/3): ")
-
-    stdscr.refresh()
-    
-    # Wait for user input
-    action = stdscr.getstr(6, 0, 3).decode("utf-8").strip()
+    print("ACTION MENU:")
+    print("1. Scan Bluetooth Devices")
+    print("2. Perform Stress Test (Not Supported in Bleak)")
+    print("3. Exit")
+    action = input("Select an action (1/2/3): ").strip()
     return action
 
 async def scan_bluetooth_devices():
@@ -56,8 +42,8 @@ def stress_test_device(target_mac):
     print(f"\nStress test functionality is not implemented in bleak as it doesn't support arbitrary packet sending.")
     print(f"Use other tools for stress testing, or interact with Bluetooth Low Energy (BLE) devices.")
 
-async def main(stdscr):
-    action = display_hacker_ui(stdscr)
+async def main():
+    action = display_hacker_ui()
 
     if action == '1':
         devices = await scan_bluetooth_devices()
@@ -100,4 +86,4 @@ async def main(stdscr):
         print("Invalid input selected.")
 
 if __name__ == "__main__":
-    curses.wrapper(lambda stdscr: asyncio.run(main(stdscr)))
+    asyncio.run(main())
