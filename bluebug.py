@@ -6,7 +6,7 @@ from bleak import BleakScanner
 
 def display_banner():
     """Display a banner with creator information."""
-    # Clear the console for aesthetics (Termux does support 'clear')
+    # Clear the console for aesthetics (Termux supports 'clear')
     os.system('clear')  
     print("=" * 60)
     print(" " * 18 + "ILLUSIVEHACKS BLUETOOTH TOOL")
@@ -19,7 +19,11 @@ def display_banner():
 async def scan_bluetooth_devices():
     """Scan for nearby Bluetooth devices and display their details."""
     print("Scanning for Bluetooth devices...\n")
-    devices = await BleakScanner.discover()
+    try:
+        devices = await BleakScanner.discover()
+    except Exception as e:
+        print(f"Error scanning devices: {e}")
+        return None
 
     if not devices:
         print("No Bluetooth devices found.")
