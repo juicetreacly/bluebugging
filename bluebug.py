@@ -22,7 +22,11 @@ def display_hacker_ui():
 async def scan_bluetooth_devices():
     """Scan for nearby Bluetooth devices and display their details."""
     print("Scanning for Bluetooth devices...\n")
-    devices = await BleakScanner.discover()
+    try:
+        devices = await BleakScanner.discover()
+    except Exception as e:
+        print(f"Error scanning Bluetooth devices: {e}")
+        return None
 
     if not devices:
         print("No Bluetooth devices found.")
